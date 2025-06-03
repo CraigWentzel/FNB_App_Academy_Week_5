@@ -1,19 +1,28 @@
 <!DOCTYPE html>
  <html lang ="en">
    <head>
-     <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
        <link rel="stylesheet" type = "text/css" href="style.css">
   <title>Calculator</title>
       
     </head>
         
     <body>
-       <div class = "calculator">
+               
         <table border ="1">
           <tr>
-             <td colspan="4">
+             <td colspan="5">
                <input type =text id="inputBox" value="0"/>
             </td>
+          </tr>
+
+          <tr>
+               <td class = "memoryButton" onclick= "memoryClear()">MC</td>
+               <td class = "memoryButton" onclick= "memoryAdd()">M+</td>
+               <td class = "memoryButton" onclick= "memorySubtract()">M-</td>
+               <td class = "memoryButton" onclick ="memoryRecall()">MR</td>
+              
           </tr>
 
           <tr>
@@ -45,11 +54,13 @@
            </tr>
           <tr>
              <td class = "digitButton" onclick="percentBtnPressed('%')">%</td>
-             <td class= "digitButton"  colspan="2"onclick="digitBtnPressed(0)">0</td>
+             <td class = "digitButton" onclick="decimalBtnPressed(',')">,</td>
+             <td class=  "digitButton" onclick="digitBtnPressed(0)">0</td>
           </tr>
           </div>
                
         </table>            
+                   
         
         
          <script>
@@ -63,7 +74,7 @@
                var currentOperator;
     
 
-              //Creating Event Handler when the digit buttons are pressed 0 to 9 *//
+              //Creating an Event Handler when the digit buttons are pressed 0 to 9 *//
 
                function digitBtnPressed(button){
                 if(newLine){
@@ -76,7 +87,7 @@
 
                 }
               }
-              //Creating Event Handler for the Clear Button //
+              //Creating an Event Handler for the Clear Button //
 
               function clearBtnPressed(){
                 document.getElementById("inputBox").value = 0;
@@ -84,7 +95,7 @@
 
               }
 
-              //Creating Event Handle for the Backspace Button //
+              //Creating an Event Handler for the Backspace Button //
 
               function backspaceBtnPressed(){
                  let display = document.getElementById("inputBox");
@@ -125,7 +136,7 @@
                       }
                  
                
-                //Check this later to see if percentage is working //
+                //Event handler for Percentage Button//
                      function percentBtnPressed() {
                       var display = document.getElementById("inputBox");
                        var currentValue = parseFloat(display.value);
@@ -141,7 +152,53 @@
 
                      newLine = true;
                   }
-     
+             // Memory variable
+                var memoryValue = 0;
+
+            // MC - Memory Clear Event Handler 
+              function memoryClear() {
+              memoryValue = 0;
+               }
+
+            // MR - Memory Recall Event Handler 
+                function memoryRecall() {
+                document.getElementById("inputBox").value = memoryValue;
+                newLine = true;
+                 }
+
+           // M+ - Memory Add Event Handler 
+                function memoryAdd() {
+                 var current = parseFloat(document.getElementById("inputBox").value);
+                   if (!isNaN(current)) {
+                    memoryValue += current;
+                     }
+                   newLine = true;
+                  }
+
+            // M- - Memory Subtract Event Handler 
+                 function memorySubtract() {
+                    var current = parseFloat(document.getElementById("inputBox").value);
+                     if (!isNaN(current)) {
+                      memoryValue -= current;
+                    }
+                  newLine = true;
+                   }
+
+             //Evemt Handler for the Decimal Point Button// 
+                function decimalBtnPressed(){
+                  var display = document.getElementById("inputBox");
+
+                   if (newLine){
+                    display.value ="0.";
+                    newLine =false;
+                        } else {
+                          display.value += ",";
+
+                   parseFloat(display.value.replace(",", "."))
+
+                   }
+
+               }
 
         </script>
     </body>
